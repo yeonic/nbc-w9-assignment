@@ -54,7 +54,6 @@ public class TodoService {
 
         System.out.println(cond.getWeather() + " " + cond.getModifiedAfter() + " " + cond.getModifiedBefore());
 
-//        Page<Todo> todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
         Page<Todo> todos = todoRepository.
                 findAllBySearchCond(pageable, cond.getWeather(), cond.getModifiedAfter(), cond.getModifiedBefore());
 
