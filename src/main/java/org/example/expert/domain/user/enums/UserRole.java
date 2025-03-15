@@ -14,8 +14,8 @@ public enum UserRole {
                 .findFirst()
                 .orElseThrow(() -> new InvalidRequestException("유효하지 않은 UserRole"));
     }
-    
-    static abstract class Authority {
+
+    public static abstract class Authority {
         public static final String ROLE_ADMIN = "ROLE_ADMIN";
         public static final String ROLE_USER = "ROLE_USER";
     }
