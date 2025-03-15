@@ -2,8 +2,10 @@ package org.example.expert.config;
 
 import lombok.RequiredArgsConstructor;
 import org.example.expert.config.jwt.JwtAuthenticationFilter;
+import org.example.expert.domain.user.enums.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,6 +44,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/todos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/todos/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/todos/*/comments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/todos/*/managers").permitAll()
+                        .requestMatchers("/admin/**").hasAnyAuthority(UserRole.Authority.ROLE_ADMIN)
                         .anyRequest().authenticated()
                 )
                 .build();
