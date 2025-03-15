@@ -5,12 +5,18 @@ import org.example.expert.domain.common.exception.InvalidRequestException;
 import java.util.Arrays;
 
 public enum UserRole {
-    ADMIN, USER;
+    ROLE_ADMIN,
+    ROLE_USER;
 
     public static UserRole of(String role) {
         return Arrays.stream(UserRole.values())
                 .filter(r -> r.name().equalsIgnoreCase(role))
                 .findFirst()
-                .orElseThrow(() -> new InvalidRequestException("유효하지 않은 UerRole"));
+                .orElseThrow(() -> new InvalidRequestException("유효하지 않은 UserRole"));
+    }
+    
+    static abstract class Authority {
+        public static final String ROLE_ADMIN = "ROLE_ADMIN";
+        public static final String ROLE_USER = "ROLE_USER";
     }
 }
