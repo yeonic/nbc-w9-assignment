@@ -19,7 +19,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, TodoRepositor
                     AND (:to IS NULL OR t.modifiedAt <= :to)
             ORDER BY t.modifiedAt DESC
             """)
-    Page<Todo> findAllBySearchCond(Pageable pageable,
-                                   @Param("weather") String weather,
-                                   @Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+    Page<Todo> findAllByGetCond(Pageable pageable,
+                                @Param("weather") String weather,
+                                @Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 }
