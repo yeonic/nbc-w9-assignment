@@ -2,16 +2,21 @@ package org.example.expert.domain.todo.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 public class TodoSearchCond {
 
-    private String weather;
+    private String title; // 부분 일치 가능
 
-    private LocalDateTime modifiedAfter;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdAfter;
 
-    private LocalDateTime modifiedBefore;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdBefore;
+
+    private String managerNickname;
 }
