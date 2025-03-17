@@ -3,10 +3,12 @@ package org.example.expert.domain.manager.service;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
+import org.example.expert.domain.log.service.LogWriteService;
 import org.example.expert.domain.manager.dto.request.ManagerSaveRequest;
 import org.example.expert.domain.manager.dto.response.ManagerResponse;
 import org.example.expert.domain.manager.dto.response.ManagerSaveResponse;
 import org.example.expert.domain.manager.entity.Manager;
+import org.example.expert.domain.manager.entity.ManagerRequestStatus;
 import org.example.expert.domain.manager.repository.ManagerRepository;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoRepository;
@@ -28,6 +30,7 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
+    private final LogWriteService logWriteService;
 
     @Transactional
     public ManagerSaveResponse saveManager(AuthUser authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
@@ -48,12 +51,20 @@ public class ManagerService {
         }
 
         Manager newManagerUser = new Manager(managerUser, todo);
-        Manager savedManagerUser = managerRepository.save(newManagerUser);
 
-        return new ManagerSaveResponse(
-                savedManagerUser.getId(),
-                new UserResponse(managerUser.getId(), managerUser.getEmail(), managerUser.getNickname())
-        );
+        try {
+            Manager savedManagerUser = managerRepository.save(newManagerUser);
+            throw new RuntimeException("에러입니다");
+//            logWriteService.saveManagerAdditionLog(user, managerUser, ManagerRequestStatus.SUCCEED);
+//            return new ManagerSaveResponse(
+//                    savedManagerUser.getId(),
+//                    new UserResponse(managerUser.getId(), managerUser.getEmail(), managerUser.getNickname())
+//            );
+        } catch (Exception e) {
+            logWriteService.saveManagerAdditionLog(user, managerUser, ManagerRequestStatus.FAILED);
+            throw e;
+        }
+
     }
 
     public List<ManagerResponse> getManagers(long todoId) {
