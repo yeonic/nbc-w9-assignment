@@ -54,12 +54,11 @@ public class ManagerService {
 
         try {
             Manager savedManagerUser = managerRepository.save(newManagerUser);
-            throw new RuntimeException("에러입니다");
-//            logWriteService.saveManagerAdditionLog(user, managerUser, ManagerRequestStatus.SUCCEED);
-//            return new ManagerSaveResponse(
-//                    savedManagerUser.getId(),
-//                    new UserResponse(managerUser.getId(), managerUser.getEmail(), managerUser.getNickname())
-//            );
+            logWriteService.saveManagerAdditionLog(user, managerUser, ManagerRequestStatus.SUCCEED);
+            return new ManagerSaveResponse(
+                    savedManagerUser.getId(),
+                    new UserResponse(managerUser.getId(), managerUser.getEmail(), managerUser.getNickname())
+            );
         } catch (Exception e) {
             logWriteService.saveManagerAdditionLog(user, managerUser, ManagerRequestStatus.FAILED);
             throw e;
