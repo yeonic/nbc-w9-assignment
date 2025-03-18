@@ -56,7 +56,7 @@ public class CommentService {
             CommentResponse dto = new CommentResponse(
                     comment.getId(),
                     comment.getContents(),
-                    new UserResponse(user.getId(), user.getEmail(), user.getNickname())
+                    UserResponse.fromUser(user)
             );
             dtoList.add(dto);
         }

@@ -79,7 +79,7 @@ public class TodoService {
                 todo.getTitle(),
                 todo.getContents(),
                 todo.getWeather(),
-                new UserResponse(user.getId(), user.getEmail(), user.getNickname()),
+                UserResponse.fromUser(user),
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
