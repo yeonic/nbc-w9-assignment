@@ -1,9 +1,9 @@
 package org.example.expert;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.expert.domain.user.entity.User;
-import org.example.expert.domain.user.repository.UserRepository;
-import org.example.expert.domain.user.repostory.BulkRepository;
+import org.example.expert.domain.user.dto.UserWithIdAndNickname;
+import org.example.expert.domain.user.repository.BulkRepository;
+import org.example.expert.domain.user.repository.TestUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ public class MassiveDataTest {
 
     public static final int BATCH_SIZE = 1000;
     @Autowired BulkRepository bulkRepository;
-    @Autowired UserRepository userRepository;
+    @Autowired TestUserRepository userRepository;
 
     /*@BeforeEach
     void before() {
@@ -46,7 +46,7 @@ public class MassiveDataTest {
         // 100번 실행한 값의 평균을 낸다.
         for (int i = 0; i < 100; i++) {
             long start = System.currentTimeMillis();
-            Optional<User> user500000 = userRepository.findByNickname("user500000");
+            Optional<UserWithIdAndNickname> user500000 = userRepository.findUserByNickname("user500000");
             long end = System.currentTimeMillis();
             totalElapsed += end - start;
         }
