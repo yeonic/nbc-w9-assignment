@@ -1,4 +1,4 @@
-package org.example.expert.domain.user.repostory;
+package org.example.expert.domain.user.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.user.entity.User;
